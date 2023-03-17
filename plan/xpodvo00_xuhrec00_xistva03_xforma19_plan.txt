@@ -1,0 +1,65 @@
+-------------------------------------------------------------------------
+|Časový plán k 2. projektu do předmětu Praktické aspekty vývoje software|
+-------------------------------------------------------------------------
+
+
+Termíny
+-------
+
+Organizační část:
+
+06.03.2023 - Založení privátního Discord serveru pro komunikaci
+08.03.2023 - Osobní schůzka ohledně organizace projektu
+13.03.2023 - Rozdělení práce mezi členy týmu
+
+Implementační část:
+
+(13.03.2023 - 26.03.2023)
+    - Vytvoření testů (TDD)
+    - Implementace matematické knihovny, profilingu, GUI
+    - Ladění programu
+(27.03.2023 - 09.04.2023)
+    - Vytvoření Makefile a instalátoru
+    - Finalizace funkcionality a případná oprava chyb
+    - Ladění a testování programu
+(09.04.2023 - 16.04.2023)
+    - Dokumentace
+    - Příručka pro uživatele
+    - Soubor README
+    - Návrhy (mockupy) budoucí verze kalkulačky
+(17.04.2023 - 23.04.2023)
+    - Poslední úpravy
+    - Zhodnocení práce v týmu
+    - Odevzdání
+(23.04.2023 - 26.04.2023)
+    - Čas navíc (záloha)
+
+Rozdělení práce
+---------------
+
+Lukáš Podvojský   (xpodvo00):   GUI, Github Projects
+Michal Uhrecký    (xuhrec00):   TDD, Readme soubor
+Jaroslav Ištvan   (xistva03):   Matematická knihovna, Příručka pro uživatele
+David Formánek    (xforma19):   Profiling, Dokumentace
+
+Komunikace v týmu
+-----------------
+
+- Jako komunikační kanál byl zvolen privátní Discord server.
+- Server je rozdělen na jednotlivé místnosti, které korespondují
+  s různými částmi projektu.
+- Každý člen týmu bude aktivně server sledovat (jednou denně).
+- V případě konkrétního dotazu na člena týmu se využije tzv. ping, který člena upozorní.
+- Pokud to bude nutné uskuteční se videohovor a probere se další postup.
+
+Verzovací systém
+----------------
+
+- Jako verzovací systém byl zvolen program git
+  se vzdáleným hostingem na serveru Github.
+- V projektu bude využita funkcionalita Githubu
+  (Github Projects, Issues, Reviews, Pull Requests).
+- Repositář projektu je privátní.
+- Do repositáře mají přístup pouze členové týmu
+  a účet "ivskontrola" pro možnost náhledu do projektu vyučujícími/cvičícími
+- Repositář je dostupný zde: https://github.com/podvoj/IVS-calc
