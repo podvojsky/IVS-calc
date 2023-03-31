@@ -7,33 +7,89 @@ This module can be used for general purposes, but was designed
 to be used in calculator application.
 """
 
+
+import math
+
+
 def add(x: int | float, y: int | float) -> int | float:
-    """Documentation for a function.
- 
-    More details.
+    """Function add for adding two numbers
+    uses input variables x and y of data type int or float
+    output data type is int or float
     """
-    pass
+    return x + y
+
 
 def sub(x: int | float, y: int | float) -> int | float:
-    pass
+    """Function sub for subtracting two numbers
+    uses input variables x and y of data type int or float
+    output data type is int or float
+    """
+    return x - y
+
 
 def mul(x: int | float, y: int | float) -> int | float:
-    pass
+    """Function mul for multiplying two numbers
+    uses input variables x and y of data type int or float
+    output data type is int or float
+    """
+    return x * y
+
 
 def div(x: int | float, y: int | float) -> int | float:
-    pass
+    """Function div for dividing two numbers
+    uses input variables x and y of data type int or float
+    output data type is int or float
+    """
+    return x / y
+
 
 def fac(x: int) -> int:
-    pass
+    """Function fac for calculating factorial of a number
+    uses input variable x of data type int
+    output data type is int
+    """
+    if x < 0:
+        return 0
+    elif x == 0:
+        return 1
+    else:
+        return x * fac(x-1)
+
 
 def pow(x: int | float, n: int | float) -> int | float:
-    pass
+    """Function pow for calculating power of a number
+    uses input variables x and n of data type int or float
+    output data type is int or float
+    output is result of x to the power of n: x^n
+    """
+    return pow(x, n)
+
 
 def sqrt(x: int | float, n: int | float) -> int | float:
-    pass
+    """Function sqrt for calculating n root of a number
+    uses input variables x and n of data type int or float
+    output data type is int or float
+    n is an index for root function and x is a radicand od function
+    output is result of: n root of x
+    """
+    return pow(n, 1/x)
+
 
 def log(x: int | float, n: int | float) -> int | float:
-    pass
+    """Function log for calculating logarithm of a number
+    uses input variables x and n of data type int or float
+    output data type is int or float
+    x is number argument of logarithm
+    n is number of logarithms base
+    output is result of: n log(x)
+    """
+    return math.log(x,n)
+
 
 def change_sign(x: int | float) -> int | float:
-    pass
+    """Function change_sing for inverting sign of an input number
+    uses input variable x of data type int or float
+    output data type is int or float
+    """
+    return -1 * x
+
