@@ -62,7 +62,7 @@ def pow(x: int | float, n: int | float) -> int | float:
     output data type is int or float
     output is result of x to the power of n: x^n
     """
-    return pow(x, n)
+    return math.pow(x, n)
 
 
 def sqrt(x: int | float, n: int | float) -> int | float:
@@ -72,7 +72,7 @@ def sqrt(x: int | float, n: int | float) -> int | float:
     n is an index for root function and x is a radicand od function
     output is result of: n root of x
     """
-    return pow(n, 1/x)
+    return math.pow(n, 1/x)
 
 
 def log(x: int | float, n: int | float) -> int | float:
