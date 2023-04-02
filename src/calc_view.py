@@ -59,13 +59,18 @@ class Calculator:
         self.root.resizable(width=False, height=False)
         self.root["padx"] = 20
         self.root["pady"] = 20
-        self.root.configure(bg="#434343")
+        self.root.configure(bg=c.WINDOW_BG)
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+        self.root.rowconfigure(1, weight=4)
         
     def create_display(self) -> None:
         """Creates output display.
         """
-        font = ("Ubuntu Mono", 30)
-        self.display = tk.Entry(self.root, bg="white", fg="black", width=300, font=font, justify="right")
+        self.display_frame = tk.Frame(self.root, bg=c.WINDOW_BG, width=300)
+        self.display_frame.grid(row=0, column=0)
+        
+        self.display = tk.Entry(self.display_frame, bg=c.DISPLAY_BG, fg=c.DISPLAY_FG, width=300, font=(Calculator.FONT, 30), justify="right")
         
         self.display.insert(index=0, string="abc ")
         self.display.insert(index="end", string=u'123')
