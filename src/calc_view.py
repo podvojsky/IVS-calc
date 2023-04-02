@@ -22,6 +22,7 @@ class Calculator:
         self.root = tk.Tk()
         self.cfg_window()
         self.create_display()
+        self.create_buttons()
         
         
     @staticmethod
