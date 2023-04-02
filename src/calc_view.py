@@ -7,6 +7,7 @@ for the calculator using tkinter module.
 
 import sys
 import tkinter as tk
+import colors as c
 
 
 class Calculator:
