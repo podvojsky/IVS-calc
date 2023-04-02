@@ -13,7 +13,8 @@ import colors as c
 class Calculator:
     """_summary_
     """
-    icon_path = "./icons/calculator-96.png"
+    ICON_PATH = "./icons/calculator-96.png"
+    FONT = "Ubuntu Mono"
 
     def __init__(self) -> None:
         """Initializes a new Calculator object.
@@ -47,7 +48,7 @@ class Calculator:
         
         # Setting window icon.
         try:
-            icon = tk.PhotoImage(file=Calculator.icon_path)
+            icon = tk.PhotoImage(file=Calculator.ICON_PATH)
             self.root.wm_iconphoto(False, icon)
         except tk.TclError as icon_not_found:
             self.eprint(icon_not_found)
