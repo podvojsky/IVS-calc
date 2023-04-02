@@ -19,6 +19,8 @@ class Calculator:
         """
         self.root = tk.Tk()
         self.cfg_window()
+        self.create_display()
+        
         
     @staticmethod
     def eprint(e: object) -> None:
@@ -28,6 +30,7 @@ class Calculator:
             e (object): Any type of exception.
         """
         print(e, file=sys.stderr)
+
 
     def start(self) -> None:
         """Runs the Calculator.
@@ -51,6 +54,22 @@ class Calculator:
         self.root.title("Calculator")
         self.root.geometry("350x450")
         self.root.resizable(width=False, height=False)
+        self.root["padx"] = 20
+        self.root["pady"] = 20
+        self.root.configure(bg="#434343")
+        
+    def create_display(self) -> None:
+        """Creates output display.
+        """
+        font = ("Ubuntu Mono", 30)
+        self.display = tk.Entry(self.root, bg="white", fg="black", width=300, font=font, justify="right")
+        
+        self.display.insert(index=0, string="abc ")
+        self.display.insert(index="end", string=u'123')
+        self.display.configure(state="readonly")
+        
+        self.display.pack()
+        
 
 
 if __name__ == "__main__":
