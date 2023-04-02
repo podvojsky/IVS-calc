@@ -44,7 +44,7 @@ class Calculator:
         and other attributes for main Calculator window.
         """
         
-        """Setting window icon."""
+        # Setting window icon.
         try:
             icon = tk.PhotoImage(file=Calculator.icon_path)
             self.root.wm_iconphoto(False, icon)
