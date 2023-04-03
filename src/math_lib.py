@@ -16,7 +16,7 @@ def add(x: int | float, y: int | float) -> int | float:
     uses input variables x and y of data type int or float
     output data type is int or float
     """
-    return x + y
+    return round(x + y, 10)
 
 
 def sub(x: int | float, y: int | float) -> int | float:
@@ -24,7 +24,7 @@ def sub(x: int | float, y: int | float) -> int | float:
     uses input variables x and y of data type int or float
     output data type is int or float
     """
-    return x - y
+    return round(x - y, 10)
 
 
 def mul(x: int | float, y: int | float) -> int | float:
@@ -32,7 +32,7 @@ def mul(x: int | float, y: int | float) -> int | float:
     uses input variables x and y of data type int or float
     output data type is int or float
     """
-    return x * y
+    return round(x * y, 10)
 
 
 def div(x: int | float, y: int | float) -> int | float:
@@ -40,7 +40,7 @@ def div(x: int | float, y: int | float) -> int | float:
     uses input variables x and y of data type int or float
     output data type is int or float
     """
-    return x / y
+    return round(x / y, 10)
 
 
 def fac(x: int) -> int:
@@ -62,7 +62,7 @@ def pow(x: int | float, n: int | float) -> int | float:
     output data type is int or float
     output is result of x to the power of n: x^n
     """
-    return math.pow(x, n)
+    return round(math.pow(x, n), 10)
 
 
 def sqrt(x: int | float, n: int | float) -> int | float:
@@ -72,7 +72,7 @@ def sqrt(x: int | float, n: int | float) -> int | float:
     n is an index for root function and x is a radicand od function
     output is result of: n root of x
     """
-    return math.pow(n, 1/x)
+    return round(math.pow(n, 1/x), 10)
 
 
 def log(x: int | float, n: int | float) -> int | float:
@@ -83,7 +83,7 @@ def log(x: int | float, n: int | float) -> int | float:
     n is number of logarithms base
     output is result of: n log(x)
     """
-    return math.log(x,n)
+    return round(math.log(x,n), 10)
 
 
 def change_sign(x: int | float) -> int | float:
@@ -91,5 +91,5 @@ def change_sign(x: int | float) -> int | float:
     uses input variable x of data type int or float
     output data type is int or float
     """
-    return -1 * x
+    return round(-1 * x, 10)
 
