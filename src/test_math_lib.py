@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import unittest
-import pytest
 import math_lib
 
 class TestMathLib(unittest.TestCase):
@@ -11,6 +10,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.add(3,-4), -1)
         self.assertEqual(math_lib.add(-2,-7), -9)
         self.assertEqual(math_lib.add(0,0), 0)
+        self.assertEqual(math_lib.add(2,0), 2)
         self.assertEqual(math_lib.add(1.2, 3.7), 4.9)
         self.assertEqual(math_lib.add(2, 1.97), 3.97)
         self.assertEqual(math_lib.add(1.53, 4), 5.53)
@@ -29,6 +29,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sub(2,-2), 4)
         self.assertEqual(math_lib.sub(-2,-7), 5)
         self.assertEqual(math_lib.sub(0,0), 0)
+        self.assertEqual(math_lib.sub(2,0), 2)
         self.assertEqual(math_lib.sub(1.2, 3.7), -2.5)
         self.assertEqual(math_lib.sub(2, 1.97), 0.03)
         self.assertEqual(math_lib.sub(1.53, 4), -2.47)
@@ -40,6 +41,46 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sub(-3.255, -1), -2.255)
         self.assertEqual(math_lib.sub(-5, -1.25), -3.75)
         self.assertEqual(math_lib.sub(10.951475986427845368741, 14.541796248961426486), -3.5903202625)
+
+    def test_mul(self):
+        self.assertEqual(math_lib.mul(4,3), 12)
+        self.assertEqual(math_lib.mul(-2,2), -4)
+        self.assertEqual(math_lib.mul(2,-2), -4)
+        self.assertEqual(math_lib.mul(-2,-7), 14)
+        self.assertEqual(math_lib.mul(0,0), 0)
+        self.assertEqual(math_lib.mul(2,0), 0)
+        self.assertEqual(math_lib.mul(1.2, 3.7), 4.44)
+        self.assertEqual(math_lib.mul(2, 1.97), 3.94)
+        self.assertEqual(math_lib.mul(1.53, 4), 6.12)
+        self.assertEqual(math_lib.mul(-1.5, 1.1), -1.65)
+        self.assertEqual(math_lib.mul(2.5, -15.25), -38.125)
+        self.assertEqual(math_lib.mul(5, -2.5), 12.5)
+        self.assertEqual(math_lib.mul(-3.255, 1), -3.255)
+        self.assertEqual(math_lib.mul(6, -1), -6)
+        self.assertEqual(math_lib.mul(-10.525, -2.5), 26.3125)
+        self.assertEqual(math_lib.mul(-3.255, -1), 3.255)
+        self.assertEqual(math_lib.mul(-5, -1.25), -6.25)
+        self.assertEqual(math_lib.mul(10.951475986427845368741, 14.541796248961426486), 159.2541324200)
+
+    def test_div(self):
+        self.assertEqual(math_lib.div(6,2), 3)
+        self.assertEqual(math_lib.div(-2,2), -1)
+        self.assertEqual(math_lib.div(2,-2), -1)
+        self.assertEqual(math_lib.div(-7,-2), 3.5)
+        self.assertEqual(math_lib.div(0,5), 0)
+        self.assertEqual(math_lib.div(2.5, 1.25), 2)
+        self.assertEqual(math_lib.div(4, 2.5), 1.6)
+        self.assertEqual(math_lib.div(2.5, 2), 1.25)
+        self.assertEqual(math_lib.div(-2.5, 1.25), -2)
+        self.assertEqual(math_lib.div(2.5, -1.25), -2)
+        self.assertEqual(math_lib.div(15, -2.5), -6)
+        self.assertEqual(math_lib.div(-8.25, 4), -2.0625)
+        self.assertEqual(math_lib.div(6, -1), -6)
+        self.assertEqual(math_lib.div(-2.4, -7.5), 0.32)
+        self.assertEqual(math_lib.div(-3.255, -1), 3.255)
+        self.assertEqual(math_lib.div(10.951475986427845368741, 14.541796248961426486), 0.7531033855)
+
+        self.assertRaises(ZeroDivisionError, math_lib.div, 10, 0) 
         
 if __name__ == '_main_':
     unittest.main()
