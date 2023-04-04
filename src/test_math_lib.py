@@ -81,6 +81,48 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.div(10.951475986427845368741, 14.541796248961426486), 0.7531033855)
 
         self.assertRaises(ZeroDivisionError, math_lib.div, 10, 0) 
-        
+
+    def test_pow(self):
+        self.assertEqual(math_lib.pow(6,2), 36)
+        self.assertEqual(math_lib.pow(-2,3), -8)
+        self.assertEqual(math_lib.pow(2,-3), 0.125)
+        self.assertEqual(math_lib.pow(-4,-2), 0.0625)
+        self.assertEqual(math_lib.pow(0,5), 0)
+        self.assertEqual(math_lib.pow(0,0), 1)
+        self.assertEqual(math_lib.pow(5,0), 1)
+        self.assertEqual(math_lib.pow(-5,0), 1)
+        self.assertEqual(math_lib.pow(4.278,0), 1)
+        self.assertEqual(math_lib.pow(10.5, 5.5), 413562.4932360663)
+        self.assertEqual(math_lib.pow(4, 2.5), 32)
+        self.assertEqual(math_lib.pow(2.5, 2), 6.25)
+        self.assertEqual(math_lib.pow(2.5, -1.25), 0.3181082915)
+        self.assertEqual(math_lib.pow(8, -2.5), 0.0055242717)
+        self.assertEqual(math_lib.pow(-8.25, 3), -561.515625)
+        self.assertEqual(math_lib.pow(1, 6), 1)
+        self.assertEqual(math_lib.pow(1, -6), 1)
+
+        self.assertRaises(ValueError, math_lib.pow, -2.5, 1.25)
+        self.assertRaises(ValueError, math_lib.pow, -2.4, -7.5)
+
+    def test_sqrt(self):
+        self.assertEqual(math_lib.sqrt(3,8), 2)
+        self.assertEqual(math_lib.sqrt(-3,8), 0.5)
+        self.assertEqual(math_lib.sqrt(3,-8), -2)
+        self.assertEqual(math_lib.sqrt(5, 0), 0)
+        self.assertEqual(math_lib.sqrt(10.5, 5.5), 1.1762800527)
+        self.assertEqual(math_lib.sqrt(4, 2.5), 1.2574334297)
+        self.assertEqual(math_lib.sqrt(2.5, 2), 1.3195079108)
+        self.assertEqual(math_lib.sqrt(-8.25, 3), 0.8753205421)
+        self.assertEqual(math_lib.sqrt(1, -6), -6)
+        self.assertEqual(math_lib.sqrt(1, 6), 6)
+
+        self.assertRaises(ZeroDivisionError, math_lib.sqrt, 0, 0)
+        self.assertRaises(ValueError, math_lib.sqrt, -5, 0)
+        self.assertRaises(ValueError, math_lib.sqrt, 0, 5)
+        self.assertRaises(ValueError, math_lib.sqrt, -8, -3)
+        self.assertRaises(ValueError, math_lib.sqrt, 2, -16)
+        self.assertRaises(ValueError, math_lib.sqrt, 2.5, -1.25)
+        self.assertRaises(ValueError, math_lib.sqrt, 8, -2.5)
+
 if __name__ == '_main_':
     unittest.main()
