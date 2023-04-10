@@ -4,11 +4,11 @@ import fileinput
 import re
 import sys
 
-def xavg(l):
+def xavg(lst):
     """Function xavg for calculating the average value of x
     input is a list of numbers, output is an average value of them
     """
-    return math_lib.div(sum(l),len(l))
+    return math_lib.div(sum(lst),len(lst))
 
 def inputf():
     """Function inputf for getting input from stdin
