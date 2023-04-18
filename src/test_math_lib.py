@@ -123,6 +123,33 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ValueError, math_lib.sqrt, 2, -16)
         self.assertRaises(ValueError, math_lib.sqrt, 2.5, -1.25)
         self.assertRaises(ValueError, math_lib.sqrt, 8, -2.5)
+    
+    def test_log(self):
+        self.assertEqual(math_lib.log(100,10), 2)
+        self.assertEqual(math_lib.log(10,2), 3.3219280949)
+        self.assertEqual(math_lib.log(1,0), 0)
+        self.assertEqual(math_lib.log(2.5,2.5), 1)
+        self.assertEqual(math_lib.log(1.25, 13.25), 11.5799786156)
+        self.assertEqual(math_lib.log(5, 8.42), 0.7553883827)
+        self.assertEqual(math_lib.log(7.52, 20), 0.6734801223)
 
+        self.assertRaises(ValueError, math_lib.log, -5, 10)
+        self.assertRaises(ValueError, math_lib.log, 10, -2)
+        self.assertRaises(ValueError, math_lib.log, -10, -20)
+        self.assertRaises(ValueError, math_lib.log, 0, 1)
+        self.assertRaises(ValueError, math_lib.log, -5.25, 10)
+        self.assertRaises(ValueError, math_lib.log, 2, -5.78)
+        self.assertRaises(ValueError, math_lib.log, -5.97, -8.46)
+        self.assertRaises(ValueError, math_lib.log, 0, 0)
+
+    def test_change_sign(self):
+        self.assertEqual(math_lib.change_sign(100), -100)
+        self.assertEqual(math_lib.change_sign(-100), 100)
+        self.assertEqual(math_lib.change_sign(5.27), -5.27)
+        self.assertEqual(math_lib.change_sign(-5.27), 5.27)
+        self.assertEqual(math_lib.change_sign(-10.48941025679), 10.4894102568)
+        self.assertEqual(math_lib.change_sign(0), 0)
+
+        
 if __name__ == '_main_':
     unittest.main()
