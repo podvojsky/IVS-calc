@@ -80,7 +80,17 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.div(-3.255, -1), 3.255)
         self.assertEqual(math_lib.div(10.951475986427845368741, 14.541796248961426486), 0.7531033855)
 
-        self.assertRaises(ZeroDivisionError, math_lib.div, 10, 0) 
+        self.assertRaises(ZeroDivisionError, math_lib.div, 10, 0)
+
+    def test_fac(self):
+        self.assertEqual(math_lib.fac(6), 720)
+        self.assertEqual(math_lib.fac(13), 6227020800)
+        self.assertEqual(math_lib.fac(1), 1) 
+        self.assertEqual(math_lib.fac(2), 2)
+        self.assertEqual(math_lib.fac(3), 6)
+        self.assertEqual(math_lib.fac(0), 1)
+
+        self.assertRaises(ValueError, math_lib.fac, -4) 
 
     def test_pow(self):
         self.assertEqual(math_lib.pow(6,2), 36)
