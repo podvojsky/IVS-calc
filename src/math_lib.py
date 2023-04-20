@@ -72,7 +72,12 @@ def sqrt(x: int | float, n: int | float) -> int | float:
     n is an index for root function and x is a radicand od function
     output is result of: n root of x
     """
-    return round(math.pow(n, 1/x), 10)
+    if x > 0:
+        return round(math.pow(x, float(1) / n), 10)
+    elif x < 0:
+        return round(-math.pow(abs(x), float(1) / n), 10)
+    else:
+        return 0
 
 
 def log(x: int | float, n: int | float) -> int | float:
