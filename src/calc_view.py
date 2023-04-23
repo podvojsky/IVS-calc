@@ -7,8 +7,8 @@ for the calculator using tkinter module.
 
 import sys
 import tkinter as tk
-import src.colors as c
-import src.math_lib as mth
+import colors as c
+import math_lib as mth
 from math import e as en
 
 
