@@ -7,15 +7,15 @@ for the calculator using tkinter module.
 
 import sys
 import tkinter as tk
-import colors as c
-import math_lib as mth
+import src.colors as c
+import src.math_lib as mth
 from math import e as en
 
 
 class Calculator:
     """_summary_
     """
-    ICON_PATH = "./icons/calculator-96.png"
+    ICON_PATH = "/usr/share/icons/hicolor/96x96/apps/ivscalc-96.png"
     FONT = "Ubuntu Mono"
     
     clean_display = False
@@ -366,6 +366,9 @@ class Calculator:
         self.display.configure(state="readonly")
 
 
-if __name__ == "__main__":
+def main():
     calculator = Calculator()
     calculator.start()
+
+if __name__ == "__main__":
+    main()
