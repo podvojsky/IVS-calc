@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='ivscalc',
@@ -12,10 +12,6 @@ setup(
             'ivscalc=src.calc_view:main',
         ],
     },
-    install_requires=[
-        'tkinter',
-        # add any other dependencies here
-    ],
     data_files=[
         ('share/icons/hicolor/96x96/apps', ['src/icons/ivscalc-96.png']),
         ('share/applications', ['ivscalc.desktop']),
