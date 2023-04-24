@@ -1,19 +1,54 @@
 #!/usr/bin/env python3
 
-"""@package calc_view
-This module implements graphical user interface
-for the calculator using tkinter module.
-"""
+##
+# @mainpage Calculator
+#
+# @section description_main Description
+# A simple calculator application made in Python with the use of
+# Tkinter library for the GUI. It also includes it's own
+# mathematical library.
+# 
+# @section notes_main Notes
+# - Calculator supports basic mathematical functions (+, -, *, /) as well as more advanced functions (ln, sqrt, ^).
+# - It's functionality is limited to performing operations with only one or two operands at the time.
+# - Keybord input is supported.
+#
+# Copyright (c) 2023 xpodvo00-ivs-team. All rights reserved.
 
+##
+# @file calc_view.py
+#
+# @brief This module implements graphical user interface
+# for the calculator using tkinter module.
+#
+# @section description_doxygen_example Description
+# The Calculator application has it's own class and all it's
+# functionality is implemented in instance methods (multiple 
+# instances can be run).
+#
+# @section libraries_main Libraries/Modules
+# - tkinter (https://docs.python.org/3/library/tkinter.html)
+#   - Access to GUI elements and structure.
+#
+#
+# @section todo_doxygen_example TODO
+# - Implement advanced equation parsing.
+#
+# @section author_doxygen_example Author(s)
+# - Created by Lukáš Podvojský on 04/24/2023.
+#
+# Copyright (c) 2023 xpodvo00-ivs-team. All rights reserved.
+
+# Imports
 import sys
 import tkinter as tk
 import colors as c
 import math_lib as mth
 from math import e as en
 
-
+# Calculator class
 class Calculator:
-    """_summary_
+    """! Calculator class.
     """
     ICON_PATH = "/usr/share/icons/hicolor/96x96/apps/ivscalc-96.png"
     FONT = "Ubuntu Mono"
@@ -25,7 +60,7 @@ class Calculator:
     operator_buttons = ["+", "-", "*", "÷", ".", "+/-"]
 
     def __init__(self) -> None:
-        """Initializes a new Calculator object.
+        """! @brief Initializes a new Calculator object.
         """
         self.root = tk.Tk()
         self.cfg_window()
@@ -38,21 +73,20 @@ class Calculator:
         
     @staticmethod
     def eprint(e: object) -> None:
-        """Static method for printing errors to standard error output.
+        """! @brief Static method for printing errors to standard error output.
 
-        Args:
-            e (object): Any type of exception.
+        @param e     Any type of exception.
         """
         print(e, file=sys.stderr)
 
 
     def start(self) -> None:
-        """Runs the Calculator.
+        """! @brief Runs the Calculator.
         """
         self.root.mainloop()
         
     def cfg_window(self) -> None:
-        """Configures Calculator window parameters.
+        """! @brief Configures Calculator window parameters.
         
         This method configures icon, size, title
         and other attributes for main Calculator window.
@@ -77,7 +111,7 @@ class Calculator:
         self.root.rowconfigure(2, weight=6)
         
     def create_display(self) -> None:
-        """Creates output display.
+        """! @brief Creates output display and error label.
         """
         self.display_frame = tk.Frame(self.root, bg=c.WINDOW_BG, width=300)
         self.display_frame.grid(row=1, column=0)
@@ -92,10 +126,12 @@ class Calculator:
         self.error_label.grid(row=0, column=0)
         
     def create_buttons(self) -> None:
-        """Creates buttons for numbers and functions.
+        """! @brief Creates buttons for numbers and functions.
         """
         
         def create_button(btn_label: str, grid_position: tuple[int, int]):
+            """! @brief Help function that creates single button.
+            """
             button = tk.Button(self.buttons_frame, text=btn_label, font=(Calculator.FONT, 20), width=2, bg=c.NUMBER_BTN_BG, fg=c.NUMBER_BTN_FG)
             button.grid(row=grid_position[0], column=grid_position[1], padx=2, pady=2)
             self.buttons[btn_label] = button
@@ -124,6 +160,8 @@ class Calculator:
         pass
     
     def style_buttons(self):
+        """! @brief Adds styling and colors to buttons.
+        """
         self.buttons["="].configure(bg=c.EQ_BTN_BG, fg=c.EQ_BTN_FG)
         
         for fn_btn in __class__.function_buttons:
@@ -133,10 +171,14 @@ class Calculator:
         pass
     
     def add_button_funct(self):
+        """! @brief Binds click functionality to buttons.
+        """
         for button in self.buttons.values():
             button.config(command=lambda text=button.cget("text"): self.button_onclick(text))
 
     def add_button_keyboard_funct(self):
+        """! @brief Binds key press functionality to buttons.
+        """
         self.root.bind("0", lambda event: self.buttons["0"].invoke())
         self.root.bind("1", lambda event: self.buttons["1"].invoke())
         self.root.bind("2", lambda event: self.buttons["2"].invoke())
@@ -153,17 +195,24 @@ class Calculator:
         self.root.bind("-", lambda event: self.buttons["-"].invoke())
         self.root.bind("*", lambda event: self.buttons["*"].invoke())
         self.root.bind("/", lambda event: self.buttons["÷"].invoke())
+
         self.root.bind("<BackSpace>", lambda event: self.buttons["C"].invoke())
         self.root.bind("<Return>", lambda event: self.buttons["="].invoke())
 
         
     def button_onclick(self, inpt):
+        """! @brief Implements functionality for individual buttons.
 
+        @param inpt     String representing the type of the button that was clicked/pressed.
+        """
         def print_label_error():
+            """! @brief Help funtion for printing error message to error label.
+            """
             self.display.delete(0, tk.END)
             self.error_label.config(text="Zadejte číslo!")
             __class__.clean_error = True
             self.display.configure(state="readonly")
+
 
         self.display.configure(state="normal")
         if (__class__.clean_error):
@@ -234,7 +283,6 @@ class Calculator:
                 __class__.last_operator = inpt
                 pass
             
-
 
             case "+/-":
                 operand1 = self.display.get()
@@ -338,8 +386,14 @@ class Calculator:
 
 
 def main():
+    """! @brief Main part of the calculator.
+
+    This is where calculator is executed.
+    """
     calculator = Calculator()
     calculator.start()
 
 if __name__ == "__main__":
     main()
+
+# End of file calc_view.py
