@@ -121,6 +121,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sqrt(-3,8), 0.5)
         self.assertEqual(math_lib.sqrt(3,-8), -2)
         self.assertEqual(math_lib.sqrt(5, 0), 0)
+        self.assertEqual(math_lib.sqrt(0, 0), 0)
         self.assertEqual(math_lib.sqrt(10.5, 5.5), 1.1762800527)
         self.assertEqual(math_lib.sqrt(4, 2.5), 1.2574334297)
         self.assertEqual(math_lib.sqrt(2.5, 2), 1.3195079108)
@@ -128,9 +129,8 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sqrt(1, -6), -6)
         self.assertEqual(math_lib.sqrt(1, 6), 6)
 
-        self.assertRaises(ZeroDivisionError, math_lib.sqrt, 0, 0)
+        self.assertRaises(ZeroDivisionError, math_lib.sqrt, 0, 5)
         self.assertRaises(ValueError, math_lib.sqrt, -5, 0)
-        self.assertRaises(ValueError, math_lib.sqrt, 0, 5)
         self.assertRaises(ValueError, math_lib.sqrt, -8, -3)
         self.assertRaises(ValueError, math_lib.sqrt, 2, -16)
         self.assertRaises(ValueError, math_lib.sqrt, 2.5, -1.25)
