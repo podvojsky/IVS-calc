@@ -42,19 +42,17 @@ def div(x: int | float, y: int | float) -> int | float:
     """
     return round(x / y, 10)
 
-
 def fac(x: int) -> int:
     """Function fac for calculating factorial of a number
     uses input variable x of data type int
     output data type is int
     """
-    if x < 0:
-        return 0
+    if x < 0 or x > 170:
+        raise ValueError()
     elif x == 0:
         return 1
     else:
         return x * fac(x-1)
-
 
 def pow(x: int | float, n: int | float) -> int | float:
     """Function pow for calculating power of a number
@@ -64,16 +62,21 @@ def pow(x: int | float, n: int | float) -> int | float:
     """
     return round(math.pow(x, n), 10)
 
-
-def sqrt(x: int | float, n: int | float) -> int | float:
+def sqrt(n: int | float, x: int | float) -> int | float:
     """Function sqrt for calculating n root of a number
     uses input variables x and n of data type int or float
     output data type is int or float
     n is an index for root function and x is a radicand od function
     output is result of: n root of x
     """
-    return round(math.pow(n, 1/x), 10)
-
+    if x > 0:
+        return round(math.pow(x, float(1) / n), 10)
+    elif x < 0 and n % 2 == 1:
+        return round(-math.pow(abs(x), float(1) / n), 10)
+    elif x == 0 and n >= 0:
+        return 0
+    else:
+        raise ValueError()
 
 def log(x: int | float, n: int | float) -> int | float:
     """Function log for calculating logarithm of a number
