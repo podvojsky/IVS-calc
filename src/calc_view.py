@@ -168,16 +168,32 @@ class Calculator:
         self.display.configure(state="normal")
         if (__class__.clean_error):
             self.error_label.config(text="")
-
-        
+       
         match inpt:
             case "C":
                 self.display.delete(0, tk.END)
             case "=":
                 try:
                     eq = self.display.get()
-                    eq_split = eq.split(__class__.last_operator)
-                    eq_operands = (float(eq_split[0]), float(eq_split[1]))
+                    if __class__.last_operator == "-":
+                        minus_list = [i for i, letter in enumerate(eq) if letter == "-"]
+                        match len(minus_list):
+                            case 1:
+                                eq_split = eq.split(__class__.last_operator)
+                                eq_operands = (float(eq_split[0]), float(eq_split[1]))
+                            case 2:
+                                if 0 in minus_list:
+                                    operator_position = eq.find("-", 1)
+                                    eq_operands = (float(eq[:operator_position]), float(eq[operator_position + 1:]))
+                                else:
+                                    operator_position = eq.find("-")
+                                    eq_operands = (float(eq[:operator_position]), float(eq[operator_position + 1:]))
+                            case 3:
+                                operator_position = eq.find("-", 1)
+                                eq_operands = (float(eq[:operator_position]), float(eq[operator_position + 1:]))
+                    else:
+                        eq_split = eq.split(__class__.last_operator)
+                        eq_operands = (float(eq_split[0]), float(eq_split[1]))
                     match __class__.last_operator:
                         case "+":
                             result = mth.add(eq_operands[0], eq_operands[1])
@@ -234,8 +250,6 @@ class Calculator:
                 __class__.last_operator = inpt
                 pass
             
-
-
             case "+/-":
                 operand1 = self.display.get()
                 try:
@@ -247,7 +261,7 @@ class Calculator:
                     except ValueError:
                         print_label_error()
                         return
-                    operand1_int = operand1_int * (-1)
+                    operand1_int = mth.change_sign(operand1_int)
                     self.display.delete(0, tk.END)
                     if operand1_int.is_integer():
                         operand1_int = int(operand1_int)
@@ -255,13 +269,39 @@ class Calculator:
                     self.display.configure(state="readonly")
                     return
                 
-                if operand1.find("-") != -1:
-                    self.error_label.config(text="Špatný operátor '+/-'!")
-                    __class__.clean_error = True
-                    return
-
+                minus_list = [i for i, letter in enumerate(operand1) if letter == "-"]
                 operator_pos = operand1.find(__class__.last_operator)
-                self.display.insert(operator_pos+1, "-")
+
+                match len(minus_list):
+                    case 0:
+                        self.display.insert(operator_pos+1, "-")
+                    case 1:
+                        if operator_pos in minus_list:
+                            self.display.insert(operator_pos+1, "-")
+                        else:
+                            if operand1[operator_pos+1] != "-":
+                                operand1 = operand1[:operator_pos + 1] + "-" + operand1[operator_pos + 1:]
+                            else:
+                                operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                            self.display.delete(0, tk.END)
+                            self.display.insert(tk.END, str(operand1))
+                    case 2:
+                        if operator_pos in minus_list:
+                            if operator_pos == 0:
+                                operator_pos = operand1.find("-", 1)
+                            if operand1[operator_pos+1] != "-":
+                                operand1 = operand1[:operator_pos + 1] + "-" + operand1[operator_pos + 1:]
+                            else:
+                                operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                        else:
+                            operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                        self.display.delete(0, tk.END)
+                        self.display.insert(tk.END, str(operand1))
+                    case 3:
+                        operator_pos = operand1.find("-", 1)
+                        operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                        self.display.delete(0, tk.END)
+                        self.display.insert(tk.END, str(operand1))
                 pass
             case "x^2":
                 operand1 = self.display.get()
