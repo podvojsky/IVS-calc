@@ -36,7 +36,10 @@ def deviation(lst):
     tmp1=math_lib.div(tmp2,n-1)                 
     return math_lib.sqrt(2,tmp1)                
 
-if __name__ == "__main__":
+def main():
     list=inputf()
     print(deviation(list))
+
+if __name__ == "__main__":
+    main()
 

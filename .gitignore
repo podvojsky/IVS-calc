@@ -1,7 +1,10 @@
+html/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*.gz
 
 # C extensions
 *.so
@@ -11,6 +14,7 @@ __pycache__/
 build/
 develop-eggs/
 dist/
+deb_dist/
 downloads/
 eggs/
 .eggs/

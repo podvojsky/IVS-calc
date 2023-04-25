@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=IVS Calculator
+Comment=My awesome Python GUI application
+Exec=ivscalc
+Icon=/usr/share/icons/hicolor/96x96/apps/ivscalc-96.png
+Terminal=false
+Categories=Utility;

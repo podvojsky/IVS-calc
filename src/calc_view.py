@@ -15,10 +15,11 @@ from math import e as en
 class Calculator:
     """_summary_
     """
-    ICON_PATH = "./icons/calculator-96.png"
+    ICON_PATH = "/usr/share/icons/hicolor/96x96/apps/ivscalc-96.png"
     FONT = "Ubuntu Mono"
     
     clean_display = False
+    clean_error = False
     last_operator = ""
     function_buttons = ["C", "x^y", "y√x", "ln", "!", "√x", "x^2"]
     operator_buttons = ["+", "-", "*", "÷", ".", "+/-"]
@@ -32,6 +33,7 @@ class Calculator:
         self.create_buttons()
         self.style_buttons()
         self.add_button_funct()
+        self.add_button_keyboard_funct()
         
         
     @staticmethod
@@ -63,7 +65,7 @@ class Calculator:
         except tk.TclError as icon_not_found:
             self.eprint(icon_not_found)
             
-        self.root.title("Calculator")
+        self.root.title("Kalkulačka")
         self.root.geometry("350x450")
         self.root.resizable(width=False, height=False)
         self.root["padx"] = 20
@@ -71,19 +73,23 @@ class Calculator:
         self.root.configure(bg=c.WINDOW_BG)
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
-        self.root.rowconfigure(1, weight=1)
+        self.root.rowconfigure(1, weight=6)
+        self.root.rowconfigure(2, weight=6)
         
     def create_display(self) -> None:
         """Creates output display.
         """
         self.display_frame = tk.Frame(self.root, bg=c.WINDOW_BG, width=300)
-        self.display_frame.grid(row=0, column=0)
+        self.display_frame.grid(row=1, column=0)
         
         self.display = tk.Entry(self.display_frame, bg=c.DISPLAY_BG, fg=c.DISPLAY_FG, width=300, font=(Calculator.FONT, 30), justify="right")
         
         self.display.configure(state="readonly")
         
         self.display.pack()
+
+        self.error_label = tk.Label(self.root, bg=c.WINDOW_BG, fg="#e86056", font=(Calculator.FONT, 16))
+        self.error_label.grid(row=0, column=0)
         
     def create_buttons(self) -> None:
         """Creates buttons for numbers and functions.
@@ -97,7 +103,7 @@ class Calculator:
         
         
         self.buttons_frame = tk.Frame(self.root, bg=c.WINDOW_BG, width=300)
-        self.buttons_frame.grid(row=1, column=0)
+        self.buttons_frame.grid(row=2, column=0)
         
         self.buttons = {}
         
@@ -115,8 +121,6 @@ class Calculator:
         self.buttons["="].grid(rowspan=2)
         self.buttons["="].config(height=2, pady=13)
         
-        print(self.buttons)
-        
         pass
     
     def style_buttons(self):
@@ -131,19 +135,65 @@ class Calculator:
     def add_button_funct(self):
         for button in self.buttons.values():
             button.config(command=lambda text=button.cget("text"): self.button_onclick(text))
+
+    def add_button_keyboard_funct(self):
+        self.root.bind("0", lambda event: self.buttons["0"].invoke())
+        self.root.bind("1", lambda event: self.buttons["1"].invoke())
+        self.root.bind("2", lambda event: self.buttons["2"].invoke())
+        self.root.bind("3", lambda event: self.buttons["3"].invoke())
+        self.root.bind("4", lambda event: self.buttons["4"].invoke())
+        self.root.bind("5", lambda event: self.buttons["5"].invoke())
+        self.root.bind("6", lambda event: self.buttons["6"].invoke())
+        self.root.bind("7", lambda event: self.buttons["7"].invoke())
+        self.root.bind("8", lambda event: self.buttons["8"].invoke())
+        self.root.bind("9", lambda event: self.buttons["9"].invoke())
+
+        self.root.bind(".", lambda event: self.buttons["."].invoke())
+        self.root.bind("+", lambda event: self.buttons["+"].invoke())
+        self.root.bind("-", lambda event: self.buttons["-"].invoke())
+        self.root.bind("*", lambda event: self.buttons["*"].invoke())
+        self.root.bind("/", lambda event: self.buttons["÷"].invoke())
+        self.root.bind("<BackSpace>", lambda event: self.buttons["C"].invoke())
+        self.root.bind("<Return>", lambda event: self.buttons["="].invoke())
+
         
     def button_onclick(self, inpt):
+
+        def print_label_error():
+            self.display.delete(0, tk.END)
+            self.error_label.config(text="Zadejte číslo!")
+            __class__.clean_error = True
+            self.display.configure(state="readonly")
+
         self.display.configure(state="normal")
-        
+        if (__class__.clean_error):
+            self.error_label.config(text="")
+       
         match inpt:
             case "C":
                 self.display.delete(0, tk.END)
             case "=":
                 try:
                     eq = self.display.get()
-                    eq_split = eq.split(__class__.last_operator)
-                    eq_operands = (float(eq_split[0]), float(eq_split[1]))
-                    print(eq_split)
+                    if __class__.last_operator == "-":
+                        minus_list = [i for i, letter in enumerate(eq) if letter == "-"]
+                        match len(minus_list):
+                            case 1:
+                                eq_split = eq.split(__class__.last_operator)
+                                eq_operands = (float(eq_split[0]), float(eq_split[1]))
+                            case 2:
+                                if 0 in minus_list:
+                                    operator_position = eq.find("-", 1)
+                                    eq_operands = (float(eq[:operator_position]), float(eq[operator_position + 1:]))
+                                else:
+                                    operator_position = eq.find("-")
+                                    eq_operands = (float(eq[:operator_position]), float(eq[operator_position + 1:]))
+                            case 3:
+                                operator_position = eq.find("-", 1)
+                                eq_operands = (float(eq[:operator_position]), float(eq[operator_position + 1:]))
+                    else:
+                        eq_split = eq.split(__class__.last_operator)
+                        eq_operands = (float(eq_split[0]), float(eq_split[1]))
                     match __class__.last_operator:
                         case "+":
                             result = mth.add(eq_operands[0], eq_operands[1])
@@ -166,147 +216,99 @@ class Calculator:
                         case "√":
                             result = mth.sqrt(eq_operands[0], eq_operands[1])
                             pass
+
                     if result.is_integer():
                         result = int(result)
-                    # formatted_result = '{:,}'.format(result)
-                    # print(formatted_result)
                     self.display.delete(0, tk.END)
                     self.display.insert(tk.END, str(result))
-                except IndexError:
+                except (IndexError, ValueError):
                     self.display.delete(0, tk.END)
-                    self.display.insert(tk.END, "Zadejte číslo!")
+                    self.error_label.config(text="Zadejte číslo!")
+                    __class__.clean_error = True
                     __class__.clean_display = True
-                except ValueError:
-                    pass
                     
-            case "+":
+            case "+" | "-" | "*" | "÷" | "x^y" | "y√x":
                 operand1 = self.display.get()
                 try:
-                    operand1_int = float(operand1)
+                    operand1_num = float(operand1)
                 except ValueError:
+                    __class__.clean_error = True
                     self.display.delete(0, tk.END)
                     if (operand1 == ""):
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    elif ("+" in __class__.operator_buttons[:-2]):
-                        self.display.insert(tk.END, "Pouze dva oper.")
+                        self.error_label.config(text="Zadejte číslo!")
                     else:
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
+                        for operator in ["+", "-", "*", "÷", "^", "√"]:
+                            if operand1.count(operator):
+                                self.error_label.config(text="Pouze jeden operátor!")
+                    self.display.configure(state="readonly")
                     return
+                if (inpt == "x^y"):
+                    inpt = "^"
+                if (inpt == "y√x"):
+                    inpt = "√"
                 self.display.insert(tk.END, inpt)
-                __class__.last_operator = "+"
+                __class__.last_operator = inpt
                 pass
-            case "-":
-                operand1 = self.display.get()
-                try:
-                    operand1_int = float(operand1)
-                except ValueError:
-                    self.display.delete(0, tk.END)
-                    if (operand1 == ""):
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    elif ("-" in __class__.operator_buttons[:-2]):
-                        self.display.insert(tk.END, "Pouze dva oper.")
-                    else:
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
-                    return
-                self.display.insert(tk.END, inpt)
-                __class__.last_operator = "-"
-                pass
-            case "*":
-                operand1 = self.display.get()
-                try:
-                    operand1_int = float(operand1)
-                except ValueError:
-                    self.display.delete(0, tk.END)
-                    if (operand1 == ""):
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    elif ("*" in __class__.operator_buttons[:-2]):
-                        self.display.insert(tk.END, "Pouze dva oper.")
-                    else:
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
-                    return
-                self.display.insert(tk.END, inpt)
-                __class__.last_operator = "*"
-                pass
-            case "÷":
-                operand1 = self.display.get()
-                try:
-                    operand1_int = float(operand1)
-                except ValueError:
-                    self.display.delete(0, tk.END)
-                    if (operand1 == ""):
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    elif ("÷" in __class__.operator_buttons[:-2]):
-                        self.display.insert(tk.END, "Pouze dva oper.")
-                    else:
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
-                    return
-                self.display.insert(tk.END, inpt)
-                __class__.last_operator = "÷"
-                pass
-            case "x^y":
-                operand1 = self.display.get()
-                try:
-                    operand1_int = float(operand1)
-                except ValueError:
-                    self.display.delete(0, tk.END)
-                    if (operand1 == ""):
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    elif ("÷" in __class__.operator_buttons[:-2]):
-                        self.display.insert(tk.END, "Pouze dva oper.")
-                    else:
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
-                    return
-                self.display.insert(tk.END, "^")
-                __class__.last_operator = "^"
-                pass
-            case "y√x":
-                operand1 = self.display.get()
-                try:
-                    operand1_int = float(operand1)
-                except ValueError:
-                    self.display.delete(0, tk.END)
-                    if (operand1 == ""):
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    elif ("÷" in __class__.operator_buttons[:-2]):
-                        self.display.insert(tk.END, "Pouze dva oper.")
-                    else:
-                        self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
-                    return
-                self.display.insert(tk.END, "√")
-                __class__.last_operator = "√"
-                pass
-            
-            
             
             case "+/-":
                 operand1 = self.display.get()
                 try:
-                    operand1_int = float(operand1)
-                except ValueError:
+                    operand1_split = operand1.split(__class__.last_operator)
+                    operand1_split[1]
+                except (IndexError, ValueError):
+                    try:
+                        operand1_int = float(operand1)
+                    except ValueError:
+                        print_label_error()
+                        return
+                    operand1_int = mth.change_sign(operand1_int)
                     self.display.delete(0, tk.END)
-                    self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
+                    if operand1_int.is_integer():
+                        operand1_int = int(operand1_int)
+                    self.display.insert(tk.END, str(operand1_int))
+                    self.display.configure(state="readonly")
                     return
-                operand1_int = operand1_int * (-1)
-                self.display.delete(0, tk.END)
-                if operand1_int.is_integer():
-                    operand1_int = int(operand1_int)
-                self.display.insert(tk.END, str(operand1_int))
+                
+                minus_list = [i for i, letter in enumerate(operand1) if letter == "-"]
+                operator_pos = operand1.find(__class__.last_operator)
+
+                match len(minus_list):
+                    case 0:
+                        self.display.insert(operator_pos+1, "-")
+                    case 1:
+                        if operator_pos in minus_list:
+                            self.display.insert(operator_pos+1, "-")
+                        else:
+                            if operand1[operator_pos+1] != "-":
+                                operand1 = operand1[:operator_pos + 1] + "-" + operand1[operator_pos + 1:]
+                            else:
+                                operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                            self.display.delete(0, tk.END)
+                            self.display.insert(tk.END, str(operand1))
+                    case 2:
+                        if operator_pos in minus_list:
+                            if operator_pos == 0:
+                                operator_pos = operand1.find("-", 1)
+                            if operand1[operator_pos+1] != "-":
+                                operand1 = operand1[:operator_pos + 1] + "-" + operand1[operator_pos + 1:]
+                            else:
+                                operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                        else:
+                            operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                        self.display.delete(0, tk.END)
+                        self.display.insert(tk.END, str(operand1))
+                    case 3:
+                        operator_pos = operand1.find("-", 1)
+                        operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
+                        self.display.delete(0, tk.END)
+                        self.display.insert(tk.END, str(operand1))
                 pass
             case "x^2":
                 operand1 = self.display.get()
                 try:
                     operand1_int = float(operand1)
                 except ValueError:
-                    self.display.delete(0, tk.END)
-                    self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
+                    print_label_error()
                     return
                 result = mth.pow(operand1_int, 2)
                 self.display.delete(0, tk.END)
@@ -319,9 +321,7 @@ class Calculator:
                 try:
                     operand1_int = float(operand1)
                 except ValueError:
-                    self.display.delete(0, tk.END)
-                    self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
+                    print_label_error()
                     return
                 result = mth.log(operand1_int, en)
                 self.display.delete(0, tk.END)
@@ -332,12 +332,23 @@ class Calculator:
                 operand1 = self.display.get()
                 try:
                     operand1_int = float(operand1)
+                    if operand1_int < 0:
+                        self.error_label.config(text="Pouze kladné číslo!")
+                        __class__.clean_error = True
+                        __class__.clean_display = True
+                        self.display.configure(state="readonly")
+                        return
                 except ValueError:
-                    self.display.delete(0, tk.END)
-                    self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
+                    print_label_error()
                     return
-                result = mth.fac(operand1_int)
+                try:
+                    result = mth.fac(operand1_int)
+                except RecursionError:
+                    self.error_label.config(text="Příliš velké číslo!")
+                    __class__.clean_error = True
+                    __class__.clean_display = True
+                    self.display.configure(state="readonly")
+                    return
                 self.display.delete(0, tk.END)
                 if result.is_integer():
                     result = int(result)
@@ -347,9 +358,7 @@ class Calculator:
                 try:
                     operand1_int = float(operand1)
                 except ValueError:
-                    self.display.delete(0, tk.END)
-                    self.display.insert(tk.END, "Zadejte číslo!")
-                    __class__.clean_display = True
+                    print_label_error()
                     return
                 result = mth.sqrt(2, operand1_int)
                 self.display.delete(0, tk.END)
@@ -366,6 +375,11 @@ class Calculator:
         self.display.configure(state="readonly")
 
 
-if __name__ == "__main__":
+
+
+def main():
     calculator = Calculator()
     calculator.start()
+
+if __name__ == "__main__":
+    main()
