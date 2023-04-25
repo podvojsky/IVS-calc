@@ -78,7 +78,7 @@ def pow(x: int | float, n: int | float) -> int | float:
     """
     return round(math.pow(x, n), 10)
 
-def sqrt(x: int | float, n: int | float) -> int | float:
+def sqrt(n: int | float, x: int | float) -> int | float:
     """! @brief Function sqrt for calculating n root of a number.
     @param x Number of type int or float
     @param n Root degree
