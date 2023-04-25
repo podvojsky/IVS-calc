@@ -1,10 +1,25 @@
 #!/usr/bin/env python3
+
+##
+# @file test_math_lib.py
+#
+# @brief This module tests basic mathematical functions.
+#
+# @section author_doxygen_example Author(s)
+# - Created by Michal Uhrecký on 04/18/2023.
+#
+# Copyright (c) 2023 xpodvo00-ivs-team. All rights reserved.
+
 import unittest
 import math_lib
 
 class TestMathLib(unittest.TestCase):
+    """! TestMathLib class.
+    """
     
     def test_add(self):
+        """! @brief Method test_add for testing math_lib.add.
+        """
         self.assertEqual(math_lib.add(4,3), 7)
         self.assertEqual(math_lib.add(-2,2), 0)
         self.assertEqual(math_lib.add(3,-4), -1)
@@ -24,6 +39,8 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.add(10.951475986427845368741, 14.541796248961426486), 25.4932722354)
     
     def test_sub(self):
+        """! @brief Method test_sub for testing math_lib.sub.
+        """
         self.assertEqual(math_lib.sub(4,3), 1)
         self.assertEqual(math_lib.sub(-2,2), -4)
         self.assertEqual(math_lib.sub(2,-2), 4)
@@ -43,6 +60,8 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sub(10.951475986427845368741, 14.541796248961426486), -3.5903202625)
 
     def test_mul(self):
+        """! @brief Method test_mul for testing math_lib.mul.
+        """
         self.assertEqual(math_lib.mul(4,3), 12)
         self.assertEqual(math_lib.mul(-2,2), -4)
         self.assertEqual(math_lib.mul(2,-2), -4)
@@ -63,6 +82,8 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.mul(10.951475986427845368741, 14.541796248961426486), 159.2541324200)
 
     def test_div(self):
+        """! @brief Method test_div for testing math_lib.div.
+        """
         self.assertEqual(math_lib.div(6,2), 3)
         self.assertEqual(math_lib.div(-2,2), -1)
         self.assertEqual(math_lib.div(2,-2), -1)
@@ -83,6 +104,8 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ZeroDivisionError, math_lib.div, 10, 0)
 
     def test_fac(self):
+        """! @brief Method test_fac for testing math_lib.fac.
+        """
         self.assertEqual(math_lib.fac(6), 720)
         self.assertEqual(math_lib.fac(13), 6227020800)
         self.assertEqual(math_lib.fac(1), 1) 
@@ -95,6 +118,8 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ValueError, math_lib.fac, 1025)   
 
     def test_pow(self):
+        """! @brief Method test_pow for testing math_lib.pow.
+        """
         self.assertEqual(math_lib.pow(6,2), 36)
         self.assertEqual(math_lib.pow(-2,3), -8)
         self.assertEqual(math_lib.pow(2,-3), 0.125)
@@ -117,6 +142,8 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ValueError, math_lib.pow, -2.4, -7.5)
 
     def test_sqrt(self):
+        """! @brief Method test_sqrt for testing math_lib.sqrt.
+        """
         self.assertEqual(math_lib.sqrt(3,8), 2)
         self.assertEqual(math_lib.sqrt(-3,8), 0.5)
         self.assertEqual(math_lib.sqrt(3,-8), -2)
@@ -137,6 +164,8 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ValueError, math_lib.sqrt, 8, -2.5)
     
     def test_log(self):
+        """! @brief Method test_log for testing math_lib.log.
+        """
         self.assertEqual(math_lib.log(100,10), 2)
         self.assertEqual(math_lib.log(10,2), 3.3219280949)
         self.assertEqual(math_lib.log(2.5,2.5), 1)
@@ -155,6 +184,8 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ValueError, math_lib.log, 0, 0)
 
     def test_change_sign(self):
+        """! @brief Method test_change_sign for testing math_lib.change_sign.
+        """
         self.assertEqual(math_lib.change_sign(100), -100)
         self.assertEqual(math_lib.change_sign(-100), 100)
         self.assertEqual(math_lib.change_sign(5.27), -5.27)

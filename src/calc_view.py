@@ -44,6 +44,7 @@ import sys
 import tkinter as tk
 import colors as c
 import math_lib as mth
+import re
 from math import e as en
 
 # Calculator class
@@ -227,7 +228,7 @@ class Calculator:
                     if __class__.last_operator == "-":
                         minus_list = [i for i, letter in enumerate(eq) if letter == "-"]
                         match len(minus_list):
-                            case 1:
+                            case 0|1:
                                 eq_split = eq.split(__class__.last_operator)
                                 eq_operands = (float(eq_split[0]), float(eq_split[1]))
                             case 2:
@@ -271,8 +272,13 @@ class Calculator:
                     self.display.delete(0, tk.END)
                     self.display.insert(tk.END, str(result))
                 except (IndexError, ValueError):
-                    self.display.delete(0, tk.END)
-                    self.error_label.config(text="Zadejte číslo!")
+                    number = r'^-?\d*\.?\d*$'
+                    if not re.match(number, eq) or not eq:
+                        self.error_label.config(text="Zadejte číslo!")
+                        __class__.clean_error = True
+                        __class__.clean_display = True
+                except ZeroDivisionError:
+                    self.error_label.config(text="Pokus o delení nulou!")
                     __class__.clean_error = True
                     __class__.clean_display = True
                     
@@ -282,9 +288,9 @@ class Calculator:
                     operand1_num = float(operand1)
                 except ValueError:
                     __class__.clean_error = True
-                    self.display.delete(0, tk.END)
                     if (operand1 == ""):
                         self.error_label.config(text="Zadejte číslo!")
+                        self.display.delete(0, tk.END)
                     else:
                         for operator in ["+", "-", "*", "÷", "^", "√"]:
                             if operand1.count(operator):
@@ -303,8 +309,13 @@ class Calculator:
             case "+/-":
                 operand1 = self.display.get()
                 try:
-                    operand1_split = operand1.split(__class__.last_operator)
-                    operand1_split[1]
+                    if __class__.last_operator == "-":
+                       minus_list = [i for i, letter in enumerate(operand1) if letter == "-"]
+                       if operand1[0] == "-" and len(minus_list) <= 1:
+                            raise IndexError()
+                    else:
+                        operand1_split = operand1.split(__class__.last_operator)
+                        operand1_split[1]
                 except (IndexError, ValueError):
                     try:
                         operand1_int = float(operand1)
@@ -329,7 +340,7 @@ class Calculator:
                         if operator_pos in minus_list:
                             self.display.insert(operator_pos+1, "-")
                         else:
-                            if operand1[operator_pos+1] != "-":
+                            if operator_pos + 1 >= len(operand1) or operand1[operator_pos+1] != "-":
                                 operand1 = operand1[:operator_pos + 1] + "-" + operand1[operator_pos + 1:]
                             else:
                                 operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
@@ -339,7 +350,7 @@ class Calculator:
                         if operator_pos in minus_list:
                             if operator_pos == 0:
                                 operator_pos = operand1.find("-", 1)
-                            if operand1[operator_pos+1] != "-":
+                            if operator_pos + 1 >= len(operand1) or operand1[operator_pos+1] != "-":
                                 operand1 = operand1[:operator_pos + 1] + "-" + operand1[operator_pos + 1:]
                             else:
                                 operand1 = operand1[:operator_pos + 1] + operand1[operator_pos + 2:]
@@ -373,15 +384,20 @@ class Calculator:
                 except ValueError:
                     print_label_error()
                     return
-                result = mth.log(operand1_int, en)
-                self.display.delete(0, tk.END)
-                if result.is_integer():
-                    result = int(result)
-                self.display.insert(tk.END, str(result))
+                try:
+                    result = mth.log(operand1_int, en)
+                    self.display.delete(0, tk.END)
+                    if result.is_integer():
+                        result = int(result)
+                    self.display.insert(tk.END, str(result))
+                except ValueError:
+                    self.error_label.config(text="Pouze kladné číslo!")
+                    __class__.clean_error = True
+                    __class__.clean_display = True
             case "!":
                 operand1 = self.display.get()
                 try:
-                    operand1_int = float(operand1)
+                    operand1_int = int(operand1)
                     if operand1_int < 0:
                         self.error_label.config(text="Pouze kladné číslo!")
                         __class__.clean_error = True
@@ -389,19 +405,23 @@ class Calculator:
                         self.display.configure(state="readonly")
                         return
                 except ValueError:
-                    print_label_error()
+                    if operand1 == "":
+                        print_label_error()
+                        return
+                    self.error_label.config(text="Pouze přirozené číslo!")
+                    __class__.clean_error = True
+                    __class__.clean_display = True
+                    self.display.configure(state="readonly")
                     return
                 try:
                     result = mth.fac(operand1_int)
-                except RecursionError:
+                except ValueError:
                     self.error_label.config(text="Příliš velké číslo!")
                     __class__.clean_error = True
                     __class__.clean_display = True
                     self.display.configure(state="readonly")
                     return
                 self.display.delete(0, tk.END)
-                if result.is_integer():
-                    result = int(result)
                 self.display.insert(tk.END, str(result))
             case "√x":
                 operand1 = self.display.get()
