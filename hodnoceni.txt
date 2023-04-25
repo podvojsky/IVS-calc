@@ -1,0 +1,4 @@
+xpodvo00 100 (GUI, balíčkování, programová dokumentace)
+xuhrec00 100 (Testování, dokumentace, README)
+xistva03 100 (Matematická knihovna, dokumentace)
+xforma19 100 (Odchylka, Profiling)

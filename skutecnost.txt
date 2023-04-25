@@ -1,0 +1,16 @@
+Na začátku vývove probíhalo vše podle předpřipraveného plánu.
+V pozdější fázi vývoje došlo ke spoždění, ne vyloženě kvůli
+náročnosti samotné implementace (tam sice také nastalo pár úskalí),
+ale spíše kvůli dalším rozpracovaným projektům do jiných
+předmětů. Časovou náročnost projektů do ostatních předmětů
+jsme do původního plánu bohužel nezahrnuli. I tak se nám ale podařilo
+dokončit všechny hlavní části projektu, jenom nám už nezbyla
+žádná "rezerva" jako v původním plánu.
+
+Co se týče samotných deadlinů, tak ty pro nás byly spíše orientační
+a v budoucích projektech bychom na ně měli brát větší zřetel.
+
+Komunikace probíhala pravidlně přes komunikační kanál Discord.
+
+Práce s verzovacím systémem a následná práce se vzdáleným repozitářem
+probíhala dle očekávání bez větších problémů.

@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 
-"""@package colors
-This module defines color codes used for styling visual
-elements in the Calculator.
-"""
+##
+# @file colors.py
+#
+# @brief This module defines color codes used for styling visual
+# elements in the Calculator.
+#
+# @section author_doxygen_example Author(s)
+# - Created by Lukáš Podvojský on 04/24/2023.
+#
+# Copyright (c) 2023 xpodvo00-ivs-team. All rights reserved.
 
 WINDOW_BG = "#434343"
 DISPLAY_BG = "#E5E5E5"
