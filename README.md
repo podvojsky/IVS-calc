@@ -32,20 +32,20 @@ $ make
 3. Výber druhého čísla
 4. Výber znaku rovnosti
 
-<img src="images/example1.png" width="349" height="485">
+<img src="images/example1.png" width="347" height="481">
 <br><br>
-<img src="images/example2.png" width="349" height="485">
+<img src="images/example2.png" width="347" height="481">
 
 ### 1 operand
 1. Výber čísla
 2. Výber jedno operandové operace (ln, √x, x^2, !, +/-)
 
-<img src="images/example3.png" width="349" height="485">
+<img src="images/example3.png" width="347" height="481">
 <br><br>
-<img src="images/example4.png" width="349" height="485">
+<img src="images/example4.png" width="347" height="481">
 
 ## Licence
-Tento program je poskytován pod licencí GNU GPL verze 1.
+Tento program je poskytován pod licencí GNU GPL verze 3.
 
 ## Autoři
 - xpodvo00, Lukáš Podvojský 
