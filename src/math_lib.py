@@ -58,19 +58,17 @@ def div(x: int | float, y: int | float) -> int | float:
     """
     return round(x / y, 10)
 
-
 def fac(x: int) -> int:
     """! @brief Function fac for calculating factorial of a number.
     @param x Input number
     @return Factorial value of the input number
     """
-    if x < 0:
-        return 0
+    if x < 0 or x > 170:
+        raise ValueError()
     elif x == 0:
         return 1
     else:
         return x * fac(x-1)
-
 
 def pow(x: int | float, n: int | float) -> int | float:
     """! @brief Function pow for calculating power of a number.
@@ -80,15 +78,20 @@ def pow(x: int | float, n: int | float) -> int | float:
     """
     return round(math.pow(x, n), 10)
 
-
 def sqrt(x: int | float, n: int | float) -> int | float:
     """! @brief Function sqrt for calculating n root of a number.
     @param x Number of type int or float
     @param n Root degree
     @return Result (x root n) of type int or float
     """
-    return round(math.pow(n, 1/x), 10)
-
+    if x > 0:
+        return round(math.pow(x, float(1) / n), 10)
+    elif x < 0 and n % 2 == 1:
+        return round(-math.pow(abs(x), float(1) / n), 10)
+    elif x == 0 and n >= 0:
+        return 0
+    else:
+        raise ValueError()
 
 def log(x: int | float, n: int | float) -> int | float:
     """! @brief Function log for calculating logarithm of a number.

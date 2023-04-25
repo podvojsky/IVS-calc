@@ -54,12 +54,12 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.mul(1.53, 4), 6.12)
         self.assertEqual(math_lib.mul(-1.5, 1.1), -1.65)
         self.assertEqual(math_lib.mul(2.5, -15.25), -38.125)
-        self.assertEqual(math_lib.mul(5, -2.5), 12.5)
+        self.assertEqual(math_lib.mul(5, -2.5), -12.5)
         self.assertEqual(math_lib.mul(-3.255, 1), -3.255)
         self.assertEqual(math_lib.mul(6, -1), -6)
         self.assertEqual(math_lib.mul(-10.525, -2.5), 26.3125)
         self.assertEqual(math_lib.mul(-3.255, -1), 3.255)
-        self.assertEqual(math_lib.mul(-5, -1.25), -6.25)
+        self.assertEqual(math_lib.mul(-5, -1.25), 6.25)
         self.assertEqual(math_lib.mul(10.951475986427845368741, 14.541796248961426486), 159.2541324200)
 
     def test_div(self):
@@ -90,7 +90,9 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.fac(3), 6)
         self.assertEqual(math_lib.fac(0), 1)
 
-        self.assertRaises(ValueError, math_lib.fac, -4) 
+        self.assertRaises(ValueError, math_lib.fac, -4)
+        self.assertRaises(ValueError, math_lib.fac, 171)
+        self.assertRaises(ValueError, math_lib.fac, 1025)   
 
     def test_pow(self):
         self.assertEqual(math_lib.pow(6,2), 36)
@@ -102,7 +104,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.pow(5,0), 1)
         self.assertEqual(math_lib.pow(-5,0), 1)
         self.assertEqual(math_lib.pow(4.278,0), 1)
-        self.assertEqual(math_lib.pow(10.5, 5.5), 413562.4932360663)
+        self.assertEqual(math_lib.pow(10.5, 5.5), 413562.4932360662)
         self.assertEqual(math_lib.pow(4, 2.5), 32)
         self.assertEqual(math_lib.pow(2.5, 2), 6.25)
         self.assertEqual(math_lib.pow(2.5, -1.25), 0.3181082915)
@@ -119,6 +121,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sqrt(-3,8), 0.5)
         self.assertEqual(math_lib.sqrt(3,-8), -2)
         self.assertEqual(math_lib.sqrt(5, 0), 0)
+        self.assertEqual(math_lib.sqrt(0, 0), 0)
         self.assertEqual(math_lib.sqrt(10.5, 5.5), 1.1762800527)
         self.assertEqual(math_lib.sqrt(4, 2.5), 1.2574334297)
         self.assertEqual(math_lib.sqrt(2.5, 2), 1.3195079108)
@@ -126,9 +129,8 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.sqrt(1, -6), -6)
         self.assertEqual(math_lib.sqrt(1, 6), 6)
 
-        self.assertRaises(ZeroDivisionError, math_lib.sqrt, 0, 0)
+        self.assertRaises(ZeroDivisionError, math_lib.sqrt, 0, 5)
         self.assertRaises(ValueError, math_lib.sqrt, -5, 0)
-        self.assertRaises(ValueError, math_lib.sqrt, 0, 5)
         self.assertRaises(ValueError, math_lib.sqrt, -8, -3)
         self.assertRaises(ValueError, math_lib.sqrt, 2, -16)
         self.assertRaises(ValueError, math_lib.sqrt, 2.5, -1.25)
@@ -137,9 +139,8 @@ class TestMathLib(unittest.TestCase):
     def test_log(self):
         self.assertEqual(math_lib.log(100,10), 2)
         self.assertEqual(math_lib.log(10,2), 3.3219280949)
-        self.assertEqual(math_lib.log(1,0), 0)
         self.assertEqual(math_lib.log(2.5,2.5), 1)
-        self.assertEqual(math_lib.log(1.25, 13.25), 11.5799786156)
+        self.assertEqual(math_lib.log(13.25, 1.25), 11.5799786156)
         self.assertEqual(math_lib.log(5, 8.42), 0.7553883827)
         self.assertEqual(math_lib.log(7.52, 20), 0.6734801223)
 
@@ -147,6 +148,7 @@ class TestMathLib(unittest.TestCase):
         self.assertRaises(ValueError, math_lib.log, 10, -2)
         self.assertRaises(ValueError, math_lib.log, -10, -20)
         self.assertRaises(ValueError, math_lib.log, 0, 1)
+        self.assertRaises(ValueError, math_lib.log, 1, 0)
         self.assertRaises(ValueError, math_lib.log, -5.25, 10)
         self.assertRaises(ValueError, math_lib.log, 2, -5.78)
         self.assertRaises(ValueError, math_lib.log, -5.97, -8.46)
@@ -159,7 +161,6 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(math_lib.change_sign(-5.27), 5.27)
         self.assertEqual(math_lib.change_sign(-10.48941025679), 10.4894102568)
         self.assertEqual(math_lib.change_sign(0), 0)
-
-        
+    
 if __name__ == '_main_':
     unittest.main()
