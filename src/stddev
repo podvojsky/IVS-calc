@@ -1,0 +1,5 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+
+STDDEV_HOME=/usr/opt/stddev
+exec python3 "${STDDEV_HOME}/stddev.py"
