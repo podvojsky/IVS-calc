@@ -34,12 +34,7 @@ pack: clean doc test
 clean:
 	rm -rf ../$(PACK_FOLDER).zip
 	rm -rf ../$(PACK_FOLDER) &&\
-	rm -rf __pycache__ &&\
-	rm -rf deb_dist &&\
-	rm -rf dist &&\
-	rm -rf ivscalc.egg-info &&\
-	rm -rf stddev.egg-info &&\
-	rm -f *.tar.gz
+	rm -rf __pycache__
 
 test:
 	$(PYTHON) -m unittest
