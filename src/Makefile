@@ -5,10 +5,11 @@ PACK_FOLDER = xpodvo00_xuhrec00_xistva03_xforma19
 .PHONY: all clean
 
 all:
-	echo "ivs" | sudo -S apt install -y $(PYTHON) &&\
-	echo "ivs" | sudo -S apt install -y $(PYTHON)-tk
+	sudo apt install -y $(PYTHON) &&\
+	sudo apt install -y $(PYTHON)-tk
 
 pack: clean doc test
+	rm -rf __pycache__ &&\
 	mkdir ../$(PACK_FOLDER) &&\
 	mkdir ../$(PACK_FOLDER)/doc &&\
 	mkdir ../$(PACK_FOLDER)/install &&\
@@ -40,8 +41,8 @@ test:
 	$(PYTHON) -m unittest
 
 doc:
-	echo "ivs" | sudo -S apt install -y graphviz &&\
-	echo "ivs" | sudo -S apt install -y doxygen &&\
+	sudo apt install -y graphviz &&\
+	sudo apt install -y doxygen &&\
 	doxygen
 
 run:
